@@ -56,8 +56,8 @@ namespace Lecture2DBFirst_School
             //   consumerSecret: "");
 
             app.UseFacebookAuthentication(
-              appId: "793649368153090",
-              appSecret: "674553ac71f73e3c55952414114a05f3");
+              appId: "xxx",
+              appSecret: "xxx");
 
             //app.UseGoogleAuthentication(new GoogleOAuth2AuthenticationOptions()
             //{
@@ -88,11 +88,11 @@ namespace Lecture2DBFirst_School
                 //Here we create a Admin super user who will maintain the website                   
 
                 var user = new ApplicationUser();
-                user.UserName = "MadeehNayer";
-                user.Email = "m_nayer@hotmail.com";
+                user.UserName = "xxx";
+                user.Email = "xxx";
                 user.BirthDate = DateTime.Now;
 
-                string userPWD = "gahy_gahy1";
+                string userPWD = "xxx";
 
                 var chkUser = UserManager.Create(user, userPWD);
 
