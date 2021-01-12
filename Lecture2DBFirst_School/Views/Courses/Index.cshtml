@@ -1,0 +1,115 @@
+﻿
+
+@model IEnumerable<Lecture2DBFirst_School.Models.Course>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+    <a target="_blank" class="btn btn-info" href="~/WebForms/CoursesReport.aspx">Courses Report</a>
+
+</p>
+
+
+
+
+<script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+
+<script>
+    $(document).ready(function () {
+        $('#myTable').DataTable();
+    });
+</script>
+
+<form>
+    <p>
+        Title: <input type="text" name="SearchString">
+        <input type="submit" value="Filter" />
+    </p>
+</form>
+
+<table id="myTable" class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Credits)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Credits)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.CourseId }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.CourseId }) |
+                    @*@Html.ActionLink("Delete", "Delete", new { id = item.CourseId })*@
+
+                    <a class="btn btn-danger" data-model-id="@item.CourseId"
+                       onclick="Delete(this)">Delete Ajax</a>
+
+                    <script>
+
+
+                        function Delete(obj) {
+
+                            swal({
+                                title: 'Are you sure?',
+                                text: "You won't be able to revert this!",
+                                icon: 'warning',
+                                showCancelButton: true,
+                                confirmButtonColor: '#3085d6',
+                                cancelButtonColor: '#d33',
+                                confirmButtonText: 'Yes, delete it!'
+                            }).then((result) => {
+                                if (result) {
+                                    var ele = $(obj);
+                                    var Id = ele.data("model-id");
+                                    var url = "/Courses/DeleteConfirmedJSON/" + Id;
+                                    $.ajax({
+                                        url: url,
+                                        type: "POST",
+
+                                        success: function () {
+
+                                            ele.closest("tr").remove();
+                                        },
+
+                                        error: function () {
+                                            toastr.error('Failed!');
+                                        }
+
+                                    });
+                                    toastr.success('Deleted!');
+                                }
+                            })
+
+                        };
+
+                    </script>
+                </td>
+            </tr>
+        }
+    </tbody>
+
+
+
+</table>
+
+<img src="@Url.Action("DrawChart")" />
+

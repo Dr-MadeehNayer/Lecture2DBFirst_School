@@ -1,0 +1,83 @@
+﻿@model IEnumerable<Lecture2DBFirst_School.Models.Course>
+
+@{
+    ViewBag.Title = "IndexMultipleRecordsDelete";
+}
+
+<h2>IndexMultipleRecordsDelete</h2>
+
+<script src="~/scripts/jquery-3.4.1.min.js"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function () {
+
+        $("#parent").click(function () {
+            $(".child").prop("checked", this.checked);
+        });
+
+        $('.child').click(function () {
+            if ($('.child:checked').length == $('.child').length) {
+                $('#parent').prop('checked', true);
+            } else {
+                $('#parent').prop('checked', false);
+            }
+        });
+    });
+</script>
+
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+@using (Html.BeginForm("IndexMultipleRecordsDelete", "Courses", FormMethod.Post))
+{
+    <button type="submit" value="Delete"
+            class="btn btn-sm btn-danger rounded-0"
+            onclick="return confirm('Are you sure?')">
+        <i class="fa fa-trash-o"></i> Delete
+    </button>
+    <br />
+    <br />
+
+    <table class="table">
+        <tr>
+
+            <th><input type="checkbox" id="parent" class="custom-checkbox" /></th>
+
+            <th>
+                @Html.DisplayNameFor(model => model.Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Credits)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.CourseDescription)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr>
+
+                <td>
+                    <input type="checkbox" name="ID" value="@item.CourseId"
+                           class="custom-checkbox child" />
+                </td>
+
+                <td>
+                    @Html.DisplayFor(modelItem => item.Title)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Credits)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CourseDescription)
+                </td>
+
+            </tr>
+        }
+
+    </table>
+}

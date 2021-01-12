@@ -1,0 +1,13 @@
+﻿@model IEnumerable<Lecture2DBFirst_School.Models.Course>
+
+@{
+    // TODO: use the data from the model to draw a chart
+
+    var myChart = new Chart(width: 600, height: 400, theme: ChartTheme.Vanilla)
+        .AddTitle("Credits per Course")
+        .AddSeries(
+            name: "Courses",
+            xValue: Model, xField: "Title",
+            yValues: Model, yFields: "Credits")
+        .Write();
+}
